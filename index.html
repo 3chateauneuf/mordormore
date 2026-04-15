@@ -41,7 +41,7 @@
           </section>
         </div>
         <nav class="topbar-nav">
-          <button type="button" data-view-target="cadre" class="active">Cadre</button>
+          <button type="button" data-view-target="cadre" class="active">Équipe</button>
           <button type="button" data-view-target="manager">Manager</button>
           <button type="button" data-view-target="resources">Ressources</button>
           <button type="button" data-view-target="journal">Journal</button>
@@ -58,7 +58,6 @@
                 <section class="memory-strip memory-strip-inline">
                   <div class="section-minihead">
                     <h3>Reprises probables</h3>
-                    <p>Les contextes les plus plausibles pour le cargonaute actif.</p>
                   </div>
                   <div id="quick-projects" class="chip-row"></div>
                   <div id="reprise-actions" class="reprise-actions" hidden>
@@ -74,7 +73,6 @@
                 </section>
 
                 <section class="timer-panel">
-                  <p class="timer-label">Session active</p>
                   <p id="timer-display" class="timer-display">00:00:00</p>
                   <p id="timer-today-total" class="timer-today-total">Aujourd'hui : 0 h 00</p>
                   <p id="active-task-label" class="active-task-label">Prêt à lancer une nouvelle session.</p>
@@ -94,7 +92,6 @@
               <section class="capture-form-panel">
                 <div class="section-minihead">
                   <h3>Contexte (optionnel)</h3>
-                  <p>À ignorer complètement si la reprise suffit.</p>
                 </div>
 
                 <div class="form-grid">
@@ -112,9 +109,7 @@
                       placeholder="Ex. Réunion Boussole, audit ADEME, synthèse compta"
                       autocomplete="off"
                     />
-                    <small id="project-memory-hint" class="hint">
-                      Un sujet déjà connu recharge automatiquement son son contexte utile.
-                    </small>
+                    <small id="project-memory-hint" class="hint"></small>
                     <datalist id="project-suggestions"></datalist>
                   </label>
 

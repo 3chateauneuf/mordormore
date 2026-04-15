@@ -3285,7 +3285,7 @@ function applyFieldManageDeletion(kind) {
     projectInput.value = "";
     delete projectInput.dataset.lastHydratedKey;
     projectMemoryHint.textContent =
-      "Commencez à taper : un sujet déjà connu recharge automatiquement ses informations utiles.";
+      "";
   } else if (kind === "client") {
     taskInput.value = "";
   } else if (kind === "category") {
@@ -4382,9 +4382,11 @@ function resetFormAfterStop() {
   objectiveOkrInput.value = "";
   objectiveKrInput.value = "";
   notesInput.value = "";
+  if (objectiveDisclosure) {
+    objectiveDisclosure.open = false;
+  }
   renderObjectiveSelections();
-  projectMemoryHint.textContent =
-    "Commencez à taper : un sujet déjà connu recharge automatiquement ses informations utiles.";
+  projectMemoryHint.textContent = "";
   delete projectInput.dataset.lastHydratedKey;
 }
 
@@ -4843,13 +4845,16 @@ function renderActiveSession() {
   }
 
   const isPaused = Boolean(activeSession.pausedAt);
-  activeTaskLabel.textContent = isPaused ? "Session en pause." : "Session en cours.";
+  const sujet = activeSession.project || "";
+  activeTaskLabel.textContent = isPaused
+    ? (sujet ? `${sujet} — en pause` : "En pause")
+    : (sujet || "");
   toggleButton.textContent = "Arrêter";
   toggleButton.classList.toggle("running", !isPaused);
   pauseButton.hidden = false;
   pauseButton.textContent = isPaused ? "Reprendre" : "Mettre en pause";
   pauseButton.classList.toggle("paused", isPaused);
-  activeStartDisplay.textContent = `Démarré à ${formatTimeLabel(new Date(activeSession.start))}`;
+  activeStartDisplay.textContent = `Depuis ${formatTimeLabel(new Date(activeSession.start))}`;
   activeStartDisplay.disabled = false;
   updateLiveTimer();
 }
@@ -6361,7 +6366,7 @@ function fillFormFromMemory(memory) {
   renderObjectiveSelections();
   updateFieldManageButtons();
   projectInput.dataset.lastHydratedKey = memory.key;
-  projectMemoryHint.textContent = `${memory.project} reconnu. Les champs reutilisables ont ete recharges.`;
+  projectMemoryHint.textContent = `${memory.project} — contexte rechargé.`;
   renderCadreViews();
 }
 
@@ -6370,7 +6375,7 @@ function applyProjectMemoryFromInput() {
   if (!rawProject) {
     delete projectInput.dataset.lastHydratedKey;
     projectMemoryHint.textContent =
-      "Commencez à taper : un sujet déjà connu recharge automatiquement ses informations utiles.";
+      "";
     return;
   }
 
@@ -6380,7 +6385,7 @@ function applyProjectMemoryFromInput() {
     return;
   }
 
-  projectMemoryHint.textContent = `${memory.project} reconnu. Categories, tags et lien d'interet rechargeables.`;
+  projectMemoryHint.textContent = `${memory.project} — contexte rechargé.`;
 
   if (projectInput.dataset.lastHydratedKey === memory.key) {
     return;
