@@ -111,6 +111,7 @@ const pauseButton = document.querySelector("#pause-button");
 const openManualButton = document.querySelector("#open-manual-button");
 const activeStartDisplay = document.querySelector("#active-start-display");
 const timerDisplay = document.querySelector("#timer-display");
+const timerTodayTotal = document.querySelector("#timer-today-total");
 const activeTaskLabel = document.querySelector("#active-task-label");
 const todayTotal = document.querySelector("#today-total");
 const weekTotal = document.querySelector("#week-total");
@@ -3334,10 +3335,10 @@ function stopActiveSession() {
     excludeId: activeSession.id,
     onSuccess: (sessionToSave) => {
       upsertSession(sessionToSave);
+      stopTimerLoop();
       activeSession = null;
       persistSessions();
       persistActiveSession();
-      stopTimerLoop();
       resetFormAfterStop();
       render();
       void finalizeStoppedSessionOnSupabase(sessionToSave, "timer");
@@ -3424,6 +3425,7 @@ function applyLocalAccessProfile(rawName, options = {}) {
       session: null,
       appUser: null,
     };
+    stopTimerLoop();
     activeSession = null;
     persistActiveSession();
     syncTimerLoopWithActiveSession();
@@ -4312,6 +4314,7 @@ function removeSessionFromLocalState(sessionId) {
   remoteActiveSessions = remoteActiveSessions.filter((item) => item.id !== sessionId);
 
   if (removedActiveSession) {
+    stopTimerLoop();
     activeSession = null;
   }
 
@@ -4730,6 +4733,9 @@ function updateLiveCounters() {
 
   todayTotal.textContent = formatDuration(todayMs);
   weekTotal.textContent = formatDuration(weekMs);
+  if (timerTodayTotal) {
+    timerTodayTotal.textContent = `Aujourd'hui : ${formatDuration(todayMs)}`;
+  }
 }
 
 function render() {
@@ -4932,12 +4938,6 @@ function renderQuickProjects() {
   quickProjects.innerHTML = "";
   const collaborator = getCurrentCollaborator();
   const memories = getOrderedProjectMemories(collaborator).slice(0, QUICK_REPRISES_LIMIT);
-
-  // Garantir que les zones Archiver/Traite sont cachées sauf si un drag est en cours
-  if (!quickProjectsDragState) {
-    repriseActionsShell?.setAttribute("hidden", "");
-    quickProjects.classList.remove("chip-row--sorting");
-  }
 
   if (!memories.length) {
     const message = collaborator
@@ -5161,6 +5161,9 @@ function renderPersonalStats() {
   todayPanelCopy.textContent = "Choisissez un nom pour charger votre semaine.";
     teamCount.textContent = "0";
     activeCountCopy.textContent = "Aucune session en cours.";
+    if (timerTodayTotal) {
+      timerTodayTotal.textContent = "Aujourd'hui : 0 h 00";
+    }
     return;
   }
 
@@ -5184,6 +5187,9 @@ function renderPersonalStats() {
 
   todayTotal.textContent = formatDuration(todayMs);
   weekTotal.textContent = formatDuration(weekMs);
+  if (timerTodayTotal) {
+    timerTodayTotal.textContent = `Aujourd'hui : ${formatDuration(todayMs)}`;
+  }
   todayPanelCopy.textContent = `Temps saisi aujourd'hui pour ${collaborator}.`;
 
   const collaborators = new Set(getScopedSessions(getAllSessionsWithActive()).map((session) => session.collaborator).filter(Boolean));
@@ -6927,6 +6933,7 @@ async function logoutCurrentUser() {
     session: null,
     appUser: null,
   };
+  stopTimerLoop();
   activeSession = null;
   persistActiveSession();
   syncTimerLoopWithActiveSession();
