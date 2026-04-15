@@ -1146,7 +1146,7 @@ sessionList.addEventListener("click", (event) => {
       return;
     }
 
-    const label = session.project || session.task || "cette entree";
+    const label = session.project || session.task || "cette entrée";
     if (!window.confirm(`Supprimer ${label} ?`)) {
       return;
     }
@@ -1232,7 +1232,7 @@ deleteManualButton?.addEventListener("click", () => {
     return;
   }
 
-  const label = session.project || session.task || "cette entree";
+  const label = session.project || session.task || "cette entrée";
   if (!window.confirm(`Supprimer ${label} ?`)) {
     return;
   }
@@ -1393,7 +1393,7 @@ function initializeAutocomplete() {
           ? referenceCatalog.categories.map((item) => item.activity_category_label)
           : uniqueTokenValues("categories"),
       allowCreate: true,
-      createLabel: (value) => `Ajouter "${value}" comme nouvelle categorie`,
+      createLabel: (value) => `Ajouter "${value}" comme nouvelle catégorie`,
       createValue: (value) =>
         createCategoryReference(value, {
           userName: collaboratorInput.value.trim(),
@@ -1490,7 +1490,7 @@ function initializeAutocomplete() {
           ? referenceCatalog.categories.map((item) => item.activity_category_label)
           : uniqueTokenValues("categories"),
       allowCreate: true,
-      createLabel: (value) => `Ajouter "${value}" comme nouvelle categorie`,
+      createLabel: (value) => `Ajouter "${value}" comme nouvelle catégorie`,
       createValue: (value) =>
         createCategoryReference(value, {
           userName: manualCollaboratorInput.value.trim(),
@@ -2900,49 +2900,49 @@ function getFieldManagePayload(kind) {
   const payloads = {
     project: {
       kind,
-      title: "Gerer le projet",
+      title: "Gérer le projet",
       copy: "Vous pouvez modifier le projet courant ou le supprimer du contexte.",
       detail: projectInput.value.trim(),
     },
     client: {
       kind,
-      title: "Gerer le client",
+      title: "Gérer le client",
       copy: "Vous pouvez corriger le client courant ou l'effacer du contexte.",
       detail: taskInput.value.trim(),
     },
     category: {
       kind,
-      title: "Gerer la categorie",
-      copy: "Vous pouvez modifier la categorie choisie ou la retirer.",
+      title: "Gérer la catégorie",
+      copy: "Vous pouvez modifier la catégorie choisie ou la retirer.",
       detail: currentCategories.join(", "),
     },
     tags: {
       kind,
-      title: "Gerer les tags",
+      title: "Gérer les tags",
       copy: "Vous pouvez corriger les tags ou tous les retirer en une fois.",
       detail: currentTags.join(", "),
     },
     link: {
       kind,
-      title: "Gerer le lien d'interet",
+      title: "Gérer le lien d'intérêt",
       copy: "Vous pouvez modifier ce lien ou le supprimer du contexte.",
       detail: notionInput.value.trim(),
     },
     pole: {
       kind,
-      title: "Gerer le pole",
+      title: "Gérer le pôle",
       copy: "Vous pouvez corriger le pole ou vider toute l'association objectif.",
       detail: objectivePoleInput.value.trim(),
     },
     okr: {
       kind,
-      title: "Gerer l'OKR",
+      title: "Gérer l'OKR",
       copy: "Vous pouvez corriger l'OKR ou le retirer avec son KR.",
       detail: objectiveOkrInput.value.trim(),
     },
     kr: {
       kind,
-      title: "Gerer le KR",
+      title: "Gérer le KR",
       copy: "Vous pouvez corriger le KR ou le retirer.",
       detail: objectiveKrInput.value.trim(),
     },
@@ -3285,7 +3285,7 @@ function applyFieldManageDeletion(kind) {
     projectInput.value = "";
     delete projectInput.dataset.lastHydratedKey;
     projectMemoryHint.textContent =
-      "Commencez a taper: un sujet deja connu recharge automatiquement ses informations utiles.";
+      "Commencez à taper : un sujet déjà connu recharge automatiquement ses informations utiles.";
   } else if (kind === "client") {
     taskInput.value = "";
   } else if (kind === "category") {
@@ -3751,7 +3751,7 @@ async function createProjectReference(rawName, defaultCategoryLabel = "") {
   const payload = {
     project_id: nextId,
     project_name: projectName,
-    client_name: "A renseigner",
+    client_name: "À renseigner",
     status: "active",
     default_activity_category_id: defaultCategory?.activity_category_id ?? null,
     default_activity_category_label: defaultCategory?.activity_category_label ?? null,
@@ -4201,9 +4201,9 @@ async function logSessionChange(previousSession, nextSession, source = "manual")
     ["start", "Debut"],
     ["end", "Fin"],
     ["durationMs", "Duree"],
-    ["categories", "Categorie"],
+    ["categories", "Catégorie"],
     ["tags", "Tags"],
-    ["notionRef", "Lien d'interet"],
+    ["notionRef", "Lien d'intérêt"],
     ["objectivePole", "Pole"],
     ["objectiveOkr", "OKR"],
     ["objectiveKr", "KR"],
@@ -4344,7 +4344,7 @@ async function deleteSessionEverywhere(session, { source = "manual-delete" } = {
   }
 
   if (!removed) {
-    window.alert("La suppression n'a pas pu etre enregistree pour le moment.");
+    window.alert("La suppression n'a pas pu être enregistrée pour le moment.");
     return false;
   }
 
@@ -4384,7 +4384,7 @@ function resetFormAfterStop() {
   notesInput.value = "";
   renderObjectiveSelections();
   projectMemoryHint.textContent =
-    "Commencez a taper: un projet deja connu recharge automatiquement ses informations utiles.";
+    "Commencez à taper : un sujet déjà connu recharge automatiquement ses informations utiles.";
   delete projectInput.dataset.lastHydratedKey;
 }
 
@@ -4816,24 +4816,40 @@ function renderAuthPanel() {
 function renderActiveSession() {
   if (!activeSession) {
     timerDisplay.textContent = "00:00:00";
-    activeTaskLabel.textContent = "Pret a lancer une nouvelle session.";
-    toggleButton.textContent = "Demarrer";
+    toggleButton.textContent = "Démarrer";
     toggleButton.classList.remove("running");
     pauseButton.hidden = true;
     pauseButton.classList.remove("paused");
-    activeStartDisplay.textContent = "Le depart se regle si besoin";
+    activeStartDisplay.textContent = "Le départ se règle si besoin";
     activeStartDisplay.disabled = true;
+
+    const lastSession = sessions[0] ?? null;
+    if (lastSession && lastSession.project) {
+      activeTaskLabel.innerHTML = "";
+      const idleText = document.createTextNode("Prêt. Dernière activité : ");
+      const chip = document.createElement("button");
+      chip.type = "button";
+      chip.className = "last-activity-chip";
+      chip.textContent = lastSession.project;
+      chip.addEventListener("click", () => {
+        fillFormFromMemory(resolveProjectMemory(lastSession.project, getCurrentCollaborator()));
+        projectInput.value = lastSession.project;
+      });
+      activeTaskLabel.append(idleText, chip);
+    } else {
+      activeTaskLabel.textContent = "Prêt à lancer une nouvelle session.";
+    }
     return;
   }
 
   const isPaused = Boolean(activeSession.pausedAt);
   activeTaskLabel.textContent = isPaused ? "Session en pause." : "Session en cours.";
-  toggleButton.textContent = "Arreter";
+  toggleButton.textContent = "Arrêter";
   toggleButton.classList.toggle("running", !isPaused);
   pauseButton.hidden = false;
   pauseButton.textContent = isPaused ? "Reprendre" : "Mettre en pause";
   pauseButton.classList.toggle("paused", isPaused);
-  activeStartDisplay.textContent = `Demarre a ${formatTimeLabel(new Date(activeSession.start))}`;
+  activeStartDisplay.textContent = `Démarré à ${formatTimeLabel(new Date(activeSession.start))}`;
   activeStartDisplay.disabled = false;
   updateLiveTimer();
 }
@@ -4941,7 +4957,7 @@ function renderQuickProjects() {
 
   if (!memories.length) {
     const message = collaborator
-      ? "Les reprises probables apparaitront ici."
+      ? "Les reprises probables apparaîtront ici."
       : "Choisissez un nom pour retrouver vos reprises probables.";
     quickProjects.append(createEmptyState(message));
     return;
@@ -4966,8 +4982,8 @@ function renderProjectMemoryList() {
 
   if (!memories.length) {
     const message = collaborator
-      ? `Les contextes memorises de ${collaborator} apparaitront ici.`
-      : "Choisissez un cargonaute pour afficher ses contextes memorises.";
+      ? `Les contextes mémorisés de ${collaborator} apparaîtront ici.`
+      : "Choisissez un cargonaute pour afficher ses contextes mémorisés.";
     projectMemoryList.append(createEmptyState(message));
     return;
   }
@@ -5105,7 +5121,7 @@ function renderSessionList() {
   const visibleSessions = getScopedSessions(sessions);
 
   if (!visibleSessions.length) {
-    sessionList.append(createEmptyState("Le journal affichera ici les entrees enregistrees."));
+    sessionList.append(createEmptyState("Le journal affichera ici les entrées enregistrées."));
     return;
   }
 
@@ -5203,9 +5219,9 @@ function renderPersonalDistribution() {
   const collaborator = getCurrentCollaborator();
   const usesObjectives = statsMode === "objectives";
 
-  personalStatsTitle.textContent = usesObjectives ? "Objectifs en cours" : "Categories en cours";
+  personalStatsTitle.textContent = usesObjectives ? "Objectifs en cours" : "Catégories en cours";
   personalStatsCopy.textContent = usesObjectives
-    ? "Lecture compacte par OKR et KR quand ils sont renseignes."
+    ? "Lecture compacte par OKR et KR quand ils sont renseignés."
     : "Lecture compacte par type de travail sur la semaine.";
 
   if (!collaborator) {
@@ -5226,8 +5242,8 @@ function renderPersonalDistribution() {
     displayRows,
     totalMs,
     usesObjectives
-      ? "Aucun objectif 2026 renseigne cette semaine pour ce cargonaute."
-      : "Aucune categorie enregistree cette semaine pour ce cargonaute.",
+      ? "Aucun objectif 2026 renseigné cette semaine pour ce cargonaute."
+      : "Aucune catégorie enregistrée cette semaine pour ce cargonaute.",
   );
 }
 
@@ -5235,7 +5251,7 @@ function renderAgenda() {
   agendaBoard.innerHTML = "";
   const collaborator = getCurrentCollaborator();
   if (!collaborator) {
-    agendaBoard.append(createEmptyState("Choisissez un nom pour afficher et deplacer vos creneaux."));
+    agendaBoard.append(createEmptyState("Choisissez un nom pour afficher et déplacer vos créneaux."));
     if (agendaWeekLabel) {
       agendaWeekLabel.textContent = "";
     }
@@ -5248,9 +5264,9 @@ function renderAgenda() {
   const rows = getAllSessionsWithActive().filter((session) => isSessionInRange(session, range));
   const scopedRows = rows.filter((session) => normalizeText(session.collaborator) === normalizeText(collaborator));
 
-  const startHour = 0;
+  const startHour = 7;
   const endHour = 24;
-  const hourHeight = 38;
+  const hourHeight = 52;
   agendaBoard.style.setProperty("--agenda-hour-height", `${hourHeight}px`);
 
   const timeRail = document.createElement("div");
@@ -5437,8 +5453,11 @@ function assignAgendaGroupLanes(group, hourHeight) {
 }
 
 function getAgendaEventVisualSize(heightPx) {
-  if (heightPx < 24) {
+  if (heightPx < 16) {
     return "tiny";
+  }
+  if (heightPx < 28) {
+    return "minimal";
   }
   if (heightPx < 46) {
     return "compact";
@@ -5454,24 +5473,50 @@ function renderAgendaEventContents(element, session, visualSize) {
   topHandle.setAttribute("aria-hidden", "true");
   element.append(topHandle);
 
-  if (visualSize !== "tiny") {
+  const timeFormatter = new Intl.DateTimeFormat("fr-FR", { hour: "2-digit", minute: "2-digit" });
+  const startLabel = timeFormatter.format(new Date(session.start));
+  const endLabel = timeFormatter.format(new Date(session.end));
+  const sujet = session.project || session.task || "";
+
+  if (visualSize === "tiny") {
+    element.title = buildAgendaTooltip(session);
+  } else if (visualSize === "minimal") {
+    const line = document.createElement("p");
+    line.className = "agenda-event-time agenda-event-time--minimal";
+    line.textContent = sujet ? `${startLabel}–${endLabel} · ${sujet}` : `${startLabel}–${endLabel}`;
+    element.append(line);
+  } else if (visualSize === "compact") {
     const time = document.createElement("p");
     time.className = "agenda-event-time";
-    time.textContent = `${formatTimeRange(session)} · ${formatDurationHours(session.durationMs)}`;
+    time.textContent = `${startLabel}–${endLabel} · ${formatDurationHours(session.durationMs)}`;
     element.append(time);
-  }
 
-  if (visualSize === "full") {
-    const client = document.createElement("p");
-    client.className = "agenda-event-client";
-    client.textContent = getSessionClientLabel(session);
-    element.append(client);
+    if (sujet) {
+      const project = document.createElement("p");
+      project.className = "agenda-event-client agenda-event-client--compact";
+      project.textContent = sujet;
+      element.append(project);
+    }
+  } else {
+    const time = document.createElement("p");
+    time.className = "agenda-event-time";
+    time.textContent = `${startLabel}–${endLabel} · ${formatDurationHours(session.durationMs)}`;
+    element.append(time);
 
-    const icon = document.createElement("span");
-    icon.className = "agenda-event-icon";
-    icon.setAttribute("aria-hidden", "true");
-    icon.textContent = "i";
-    element.append(icon);
+    if (sujet) {
+      const project = document.createElement("p");
+      project.className = "agenda-event-client";
+      project.textContent = sujet;
+      element.append(project);
+    }
+
+    const clientLabel = getSessionClientLabel(session);
+    if (clientLabel && clientLabel !== sujet) {
+      const client = document.createElement("p");
+      client.className = "agenda-event-detail";
+      client.textContent = clientLabel;
+      element.append(client);
+    }
   }
 
   const bottomHandle = document.createElement("span");
@@ -5597,11 +5642,11 @@ function renderManagerViews() {
   const managerDisplayRows = usesObjectives ? managerObjectiveRows : managerCategoryRows;
   const managerObjectiveTotalMs = managerObjectiveRows.reduce((sum, row) => sum + row.durationMs, 0);
   const managerCategoryTotalMs = scopedRows.reduce((sum, session) => sum + (Number(session.durationMs) || 0), 0);
-  managerDistributionTitle.textContent = usesObjectives ? "Repartition OKR" : "Repartition categories";
+  managerDistributionTitle.textContent = usesObjectives ? "Répartition OKR" : "Répartition catégories";
   managerDistributionCopy.textContent = usesObjectives
-    ? "Poids relatif des objectifs sur la periode."
-    : "Poids relatif des categories sur la periode.";
-  reportCategoryHead.textContent = usesObjectives ? "OKR" : "Categorie";
+    ? "Poids relatif des objectifs sur la période."
+    : "Poids relatif des catégories sur la période.";
+  reportCategoryHead.textContent = usesObjectives ? "OKR" : "Catégorie";
   managerObjectivesPanel.hidden = !usesObjectives;
   reportKrShell.hidden = !usesObjectives;
   renderDistribution(
@@ -5609,7 +5654,7 @@ function renderManagerViews() {
     managerDistributionLegend,
     managerDisplayRows,
     usesObjectives ? managerObjectiveTotalMs : managerCategoryTotalMs,
-    usesObjectives ? "Aucun OKR renseigne sur cette plage." : "Aucune categorie disponible sur cette plage.",
+    usesObjectives ? "Aucun OKR renseigné sur cette plage." : "Aucune catégorie disponible sur cette plage.",
   );
   renderEvolutionGrid(evolutionGrid, anchor, filterCollaborator);
   if (usesObjectives) {
@@ -5617,7 +5662,7 @@ function renderManagerViews() {
   } else {
     managerObjectivesGrid.innerHTML = "";
   }
-  renderTeamTable(teamReportList, allRows, range, "Aucune donnee equipe sur cette plage.");
+  renderTeamTable(teamReportList, allRows, range, "Aucune donnée équipe sur cette plage.");
   renderReportTable(
     reportProjectList,
     buildReportRows(scopedRows, "project"),
@@ -5628,7 +5673,7 @@ function renderManagerViews() {
     reportCategoryList,
     managerDisplayRows,
     usesObjectives ? managerObjectiveTotalMs : managerCategoryTotalMs,
-    usesObjectives ? "Aucun OKR pour cette plage." : "Aucune categorie pour cette plage.",
+    usesObjectives ? "Aucun OKR pour cette plage." : "Aucune catégorie pour cette plage.",
   );
   if (usesObjectives) {
     renderReportTable(
@@ -5656,14 +5701,14 @@ function renderResourcesViews() {
   resourceRange.textContent = formatPeriodLabel(range.start, range.end, reportPeriod);
   resourceTopProject.textContent = projectTotals[0]?.label ?? "-";
   resourceTopProjectTime.textContent = projectTotals[0] ? formatDuration(projectTotals[0].durationMs) : "0 h 00";
-  resourceDistributionTitle.textContent = usesObjectives ? "Repartition globale OKR" : "Repartition globale categories";
+  resourceDistributionTitle.textContent = usesObjectives ? "Répartition globale OKR" : "Répartition globale catégories";
   resourceDistributionCopy.textContent = usesObjectives
     ? "Lecture transversale des objectifs sur la plage choisie."
-    : "Lecture transversale des categories sur la plage choisie.";
-  resourceCategoryHead.textContent = usesObjectives ? "OKR" : "Categorie";
+    : "Lecture transversale des catégories sur la plage choisie.";
+  resourceCategoryHead.textContent = usesObjectives ? "OKR" : "Catégorie";
   resourceObjectivesPanel.hidden = !usesObjectives;
   resourceKrShell.hidden = !usesObjectives;
-  resourceTopCategoryLabel.textContent = usesObjectives ? "OKR principal" : "Categorie principale";
+  resourceTopCategoryLabel.textContent = usesObjectives ? "OKR principal" : "Catégorie principale";
   resourceTopCategory.textContent = (usesObjectives ? objectiveTotals[0] : categoryTotals[0])?.label ?? "-";
   resourceTopCategoryTime.textContent = (usesObjectives ? objectiveTotals[0] : categoryTotals[0])
     ? formatDuration((usesObjectives ? objectiveTotals[0] : categoryTotals[0]).durationMs)
@@ -5677,7 +5722,7 @@ function renderResourcesViews() {
     resourceDistributionLegend,
     usesObjectives ? objectiveTotals : categoryTotals,
     totalMs,
-    usesObjectives ? "Aucun OKR renseigne sur cette plage." : "Aucune categorie disponible sur cette plage.",
+    usesObjectives ? "Aucun OKR renseigné sur cette plage." : "Aucune catégorie disponible sur cette plage.",
   );
   renderEvolutionGrid(resourceEvolutionGrid, anchor, "all");
   if (usesObjectives) {
@@ -5685,7 +5730,7 @@ function renderResourcesViews() {
   } else {
     resourceObjectivesGrid.innerHTML = "";
   }
-  renderTeamTable(resourceTeamList, allRows, range, "Aucune donnee equipe sur cette plage.");
+  renderTeamTable(resourceTeamList, allRows, range, "Aucune donnée équipe sur cette plage.");
   renderReportTable(
     resourceProjectList,
     projectTotals,
@@ -5696,7 +5741,7 @@ function renderResourcesViews() {
     resourceCategoryList,
     usesObjectives ? objectiveTotals : categoryTotals,
     totalMs,
-    usesObjectives ? "Aucun OKR sur cette plage." : "Aucune categorie sur cette plage.",
+    usesObjectives ? "Aucun OKR sur cette plage." : "Aucune catégorie sur cette plage.",
   );
   if (usesObjectives) {
     renderReportTable(
@@ -5802,7 +5847,7 @@ function renderManagerObjectivesInto(container, rows) {
   const visibleCards = nonEmptyCards.length ? nonEmptyCards : cards.slice(0, 6);
 
   if (!visibleCards.length) {
-    container.append(createEmptyState("Les objectifs suivis apparaitront ici."));
+    container.append(createEmptyState("Les objectifs suivis apparaîtront ici."));
     return;
   }
 
@@ -5966,7 +6011,7 @@ function renderManagerSummary(allRows, scopedRows, range, filterCollaborator) {
   reportRange.textContent = formatPeriodLabel(range.start, range.end, reportPeriod);
   reportTopProject.textContent = topProject ? topProject.label : "-";
   reportTopProjectTime.textContent = topProject ? formatDuration(topProject.durationMs) : "0 h 00";
-  reportTopCategoryLabel.textContent = usesObjectives ? "OKR principal" : "Categorie principale";
+  reportTopCategoryLabel.textContent = usesObjectives ? "OKR principal" : "Catégorie principale";
   reportTopCategory.textContent = topCategory ? topCategory.label : "-";
   reportTopCategoryTime.textContent = topCategory ? formatDuration(topCategory.durationMs) : "0 h 00";
   reportTopKrCard.hidden = !usesObjectives;
@@ -6325,7 +6370,7 @@ function applyProjectMemoryFromInput() {
   if (!rawProject) {
     delete projectInput.dataset.lastHydratedKey;
     projectMemoryHint.textContent =
-      "Commencez a taper: un sujet deja connu recharge automatiquement ses informations utiles.";
+      "Commencez à taper : un sujet déjà connu recharge automatiquement ses informations utiles.";
     return;
   }
 
