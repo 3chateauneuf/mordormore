@@ -41,7 +41,7 @@
           </section>
         </div>
         <nav class="topbar-nav">
-          <button type="button" data-view-target="cadre" class="active">Équipe</button>
+          <button type="button" data-view-target="cadre" class="active">Cadre</button>
           <button type="button" data-view-target="manager">Manager</button>
           <button type="button" data-view-target="resources">Ressources</button>
           <button type="button" data-view-target="journal">Journal</button>
@@ -58,6 +58,7 @@
                 <section class="memory-strip memory-strip-inline">
                   <div class="section-minihead">
                     <h3>Reprises probables</h3>
+                    <p>Les contextes les plus plausibles pour le cargonaute actif.</p>
                   </div>
                   <div id="quick-projects" class="chip-row"></div>
                   <div id="reprise-actions" class="reprise-actions" hidden>
@@ -67,22 +68,22 @@
                     </div>
                     <div id="reprise-done-zone" class="reprise-dropzone reprise-dropzone--done" data-action-kind="done">
                       <span class="reprise-dropzone-icon" aria-hidden="true">✓</span>
-                      <span>Traité</span>
+                      <span>Traite</span>
                     </div>
                   </div>
                 </section>
 
                 <section class="timer-panel">
+                  <p class="timer-label">Session active</p>
                   <p id="timer-display" class="timer-display">00:00:00</p>
-                  <p id="timer-today-total" class="timer-today-total">Aujourd'hui : 0 h 00</p>
-                  <p id="active-task-label" class="active-task-label">Prêt à lancer une nouvelle session.</p>
+                  <p id="active-task-label" class="active-task-label">Pret a lancer une nouvelle session.</p>
                   <div class="start-inline">
                     <button id="active-start-display" type="button" class="start-display-button" disabled>
-                      Le départ se règle si besoin
+                      Le depart se regle si besoin
                     </button>
                   </div>
                   <div class="button-row timer-actions">
-                    <button id="toggle-button" type="submit" class="btn btn-primary">Démarrer</button>
+                    <button id="toggle-button" type="submit" class="btn btn-primary">Demarrer</button>
                     <button id="pause-button" type="button" class="btn btn-secondary" hidden>Mettre en pause</button>
                     <button id="open-manual-button" type="button" class="btn btn-secondary">Saisie manuelle</button>
                   </div>
@@ -92,6 +93,7 @@
               <section class="capture-form-panel">
                 <div class="section-minihead">
                   <h3>Contexte (optionnel)</h3>
+                  <p>A ignorer completement si la reprise suffit.</p>
                 </div>
 
                 <div class="form-grid">
@@ -101,22 +103,24 @@
                   <label class="field field-wide">
                     <div class="field-head">
                       <span>Sujet</span>
-                      <button id="manage-project-button" type="button" class="field-manage-button" hidden>Gérer</button>
+                      <button id="manage-project-button" type="button" class="field-manage-button" hidden>Gerer</button>
                     </div>
                     <input
                       id="project-input"
                       type="text"
-                      placeholder="Ex. Réunion Boussole, audit ADEME, synthèse compta"
-                      autocomplete="off"
+                      placeholder="Ex. Reunion Boussole, audit ADEME, synthese compta"
+                      list="project-suggestions"
                     />
-                    <small id="project-memory-hint" class="hint"></small>
+                    <small id="project-memory-hint" class="hint">
+                      Un sujet deja connu recharge automatiquement son contexte utile.
+                    </small>
                     <datalist id="project-suggestions"></datalist>
                   </label>
 
                   <label class="field">
                     <div class="field-head">
                       <span>Client</span>
-                      <button id="manage-client-button" type="button" class="field-manage-button" hidden>Gérer</button>
+                      <button id="manage-client-button" type="button" class="field-manage-button" hidden>Gerer</button>
                     </div>
                     <input
                       id="task-input"
@@ -127,16 +131,16 @@
 
                   <label class="field">
                     <div class="field-head">
-                      <span>Catégorie</span>
-                      <button id="manage-category-button" type="button" class="field-manage-button" hidden>Gérer</button>
+                      <span>Categorie</span>
+                      <button id="manage-category-button" type="button" class="field-manage-button" hidden>Gerer</button>
                     </div>
                     <div class="token-field">
                       <div class="token-list" id="categories-list"></div>
                       <input
                         id="categories-input"
                         type="text"
-                        placeholder="Choisir une catégorie"
-                        autocomplete="off"
+                        placeholder="Choisir une categorie"
+                        list="category-suggestions"
                       />
                     </div>
                     <datalist id="category-suggestions"></datalist>
@@ -145,15 +149,15 @@
                   <label class="field">
                     <div class="field-head">
                       <span>Tags</span>
-                      <button id="manage-tags-button" type="button" class="field-manage-button" hidden>Gérer</button>
+                      <button id="manage-tags-button" type="button" class="field-manage-button" hidden>Gerer</button>
                     </div>
                     <div class="token-field">
                       <div class="token-list" id="tags-list"></div>
                       <input
                         id="tags-input"
                         type="text"
-                        placeholder="Atelier, revue, admin…"
-                        autocomplete="off"
+                        placeholder="Atelier, revue, admin..."
+                        list="tag-suggestions"
                       />
                     </div>
                     <datalist id="tag-suggestions"></datalist>
@@ -161,8 +165,8 @@
 
                   <label class="field">
                     <div class="field-head">
-                      <span>Lien d'intérêt</span>
-                      <button id="manage-link-button" type="button" class="field-manage-button" hidden>Gérer</button>
+                      <span>Lien d'interet</span>
+                      <button id="manage-link-button" type="button" class="field-manage-button" hidden>Gerer</button>
                     </div>
                     <input
                       id="notion-input"
@@ -177,7 +181,7 @@
                       id="notes-input"
                       class="note-textarea"
                       type="text"
-                      placeholder="Contexte, précision ou correction à retenir"
+                      placeholder="Contexte, precision ou correction a retenir"
                     />
                   </label>
 
@@ -185,7 +189,7 @@
                     <details id="objective-disclosure" class="objective-disclosure">
                       <summary class="objective-summary">
                         <div class="objective-summary-copy">
-                          <span class="objective-summary-title">Associer à un objectif 2026 (optionnel)</span>
+                          <span class="objective-summary-title">Associer a un objectif 2026 (optionnel)</span>
                           <span id="objective-summary-text" class="objective-summary-text"></span>
                         </div>
                       </summary>
@@ -194,8 +198,8 @@
                         <div class="objective-grid">
                           <label class="field objective-subfield">
                             <div class="field-head">
-                              <span>Pôle</span>
-                              <button id="manage-pole-button" type="button" class="field-manage-button" hidden>Gérer</button>
+                              <span>Pole</span>
+                              <button id="manage-pole-button" type="button" class="field-manage-button" hidden>Gerer</button>
                             </div>
                             <div class="single-select-field">
                               <div class="single-select-token" id="objective-pole-selected"></div>
@@ -210,7 +214,7 @@
                           <label class="field objective-subfield">
                             <div class="field-head">
                               <span>OKR</span>
-                              <button id="manage-okr-button" type="button" class="field-manage-button" hidden>Gérer</button>
+                              <button id="manage-okr-button" type="button" class="field-manage-button" hidden>Gerer</button>
                             </div>
                             <div class="single-select-field">
                               <div class="single-select-token" id="objective-okr-selected"></div>
@@ -225,14 +229,14 @@
                           <label class="field objective-subfield objective-subfield-wide">
                             <div class="field-head">
                               <span>KR</span>
-                              <button id="manage-kr-button" type="button" class="field-manage-button" hidden>Gérer</button>
+                              <button id="manage-kr-button" type="button" class="field-manage-button" hidden>Gerer</button>
                             </div>
                             <div class="single-select-field">
                               <div class="single-select-token" id="objective-kr-selected"></div>
                               <input
                                 id="objective-kr-input"
                                 type="text"
-                                placeholder="Choisir un résultat clé si besoin"
+                                placeholder="Choisir un resultat cle si besoin"
                               />
                             </div>
                           </label>
@@ -246,30 +250,31 @@
           </form>
         </section>
 
-        <section class="panel cadre-panel cadre-reading">
-          <div class="cadre-reading-head">
-            <div class="section-minihead">
-              <h3>Ma semaine</h3>
-              <p>Charge et répartition personnelle.</p>
+        <section class="panel cadre-panel">
+          <div class="panel-head">
+            <div>
+              <p class="eyebrow">Lecture personnelle</p>
+              <h2>Ma semaine</h2>
             </div>
-            <div id="personal-stats-switch" class="view-switch">
-              <button type="button" class="period-btn" data-stats-mode="objectives">Objectifs</button>
-              <button type="button" class="period-btn active" data-stats-mode="categories">Catégories</button>
-            </div>
+            <p class="panel-copy">Lecture immediate de la charge et de la repartition.</p>
+          </div>
+          <div id="personal-stats-switch" class="view-switch">
+            <button type="button" class="period-btn" data-stats-mode="objectives">Objectifs</button>
+            <button type="button" class="period-btn active" data-stats-mode="categories">Categories</button>
           </div>
 
           <div class="cadre-summary">
-            <article class="summary-card summary-card-compact">
+            <article class="summary-card">
               <p>Aujourd'hui</p>
               <strong id="today-total">0 h 00</strong>
               <span id="today-panel-copy">Temps saisi pour le cargonaute en cours.</span>
             </article>
-            <article class="summary-card summary-card-compact">
+            <article class="summary-card">
               <p>Cette semaine</p>
               <strong id="week-total">0 h 00</strong>
               <span>Vue du lundi au dimanche.</span>
             </article>
-            <article class="summary-card summary-card-compact">
+            <article class="summary-card">
               <p>Cargonautes visibles</p>
               <strong id="team-count">0</strong>
               <span id="active-count-copy">Aucune session en cours.</span>
@@ -279,8 +284,8 @@
           <section class="cadre-stack">
             <article class="inner-card">
               <div class="section-minihead">
-                <h3 id="personal-stats-title">Catégories en cours</h3>
-                <p id="personal-stats-copy">Lecture compacte de la semaine, par objectifs ou catégories.</p>
+                <h3 id="personal-stats-title">Categories en cours</h3>
+                <p id="personal-stats-copy">Lecture compacte de la semaine, par objectifs ou categories.</p>
               </div>
               <div id="personal-distribution-bar" class="distribution-bar"></div>
               <div id="personal-distribution-legend" class="distribution-legend"></div>
@@ -299,7 +304,7 @@
           </div>
           <div class="agenda-toolbar">
             <div class="agenda-week-nav">
-              <button id="agenda-prev-week" type="button" class="period-btn">Semaine précédente</button>
+              <button id="agenda-prev-week" type="button" class="period-btn">Semaine precedente</button>
               <button id="agenda-current-week" type="button" class="period-btn">Cette semaine</button>
               <button id="agenda-next-week" type="button" class="period-btn">Semaine suivante</button>
             </div>
@@ -321,18 +326,18 @@
 
         <div class="manager-toolbar">
           <div class="toolbar-group">
-            <span class="toolbar-group-label">Période</span>
+            <span class="toolbar-group-label">Periode</span>
             <div id="period-switch" class="period-switch">
               <button type="button" class="period-btn active" data-period="week">Semaine</button>
               <button type="button" class="period-btn" data-period="month">Mois</button>
-              <button type="button" class="period-btn" data-period="year">Année</button>
+              <button type="button" class="period-btn" data-period="year">Annee</button>
             </div>
           </div>
           <div class="toolbar-group">
             <span class="toolbar-group-label">Lecture</span>
             <div id="analysis-stats-switch" class="view-switch">
               <button type="button" class="period-btn" data-stats-mode="objectives">Objectifs</button>
-              <button type="button" class="period-btn active" data-stats-mode="categories">Catégories</button>
+              <button type="button" class="period-btn active" data-stats-mode="categories">Categories</button>
             </div>
           </div>
           <div class="toolbar-meta">
@@ -354,14 +359,14 @@
             <p class="eyebrow">Vue manager</p>
             <h2>Pilotage equipe</h2>
           </div>
-          <p class="panel-copy">Charge, répartition et écarts de lecture en un seul endroit.</p>
+          <p class="panel-copy">Charge, repartition et ecarts de lecture en un seul endroit.</p>
         </div>
 
         <div class="manager-kpis">
           <article class="summary-card">
             <p>Temps suivi</p>
             <strong id="report-total">0 h 00</strong>
-            <span id="report-range">Aucune plage sélectionnée</span>
+            <span id="report-range">Aucune plage selectionnee</span>
           </article>
           <article class="summary-card">
             <p>Projet dominant</p>
@@ -369,7 +374,7 @@
             <span id="report-top-project-time">0 h 00</span>
           </article>
           <article class="summary-card">
-            <p id="report-top-category-label">Catégorie principale</p>
+            <p id="report-top-category-label">Categorie principale</p>
             <strong id="report-top-category">-</strong>
             <span id="report-top-category-time">0 h 00</span>
           </article>
@@ -383,8 +388,8 @@
         <div class="manager-grid">
           <article class="inner-card">
             <div class="section-minihead">
-              <h3 id="manager-distribution-title">Répartition catégories</h3>
-              <p id="manager-distribution-copy">Poids relatif des catégories sur la période.</p>
+              <h3 id="manager-distribution-title">Repartition categories</h3>
+              <p id="manager-distribution-copy">Poids relatif des categories sur la periode.</p>
             </div>
             <div id="manager-distribution-bar" class="distribution-bar"></div>
             <div id="manager-distribution-legend" class="distribution-legend"></div>
@@ -393,7 +398,7 @@
           <article class="inner-card">
             <div class="section-minihead">
               <h3>Evolution</h3>
-                <p>Tendance de la période ou d'un cargonaute.</p>
+                <p>Tendance de la periode ou d'un cargonaute.</p>
             </div>
             <div id="evolution-grid" class="evolution-grid"></div>
           </article>
@@ -402,7 +407,7 @@
         <article id="manager-objectives-panel" class="inner-card objective-report-panel">
           <div class="section-minihead">
             <h3>Objectifs 2026</h3>
-            <p>Lecture par objectif avec répartition interne des KR sur la plage active.</p>
+            <p>Lecture par objectif avec repartition interne des KR sur la plage active.</p>
           </div>
           <div id="manager-objectives-grid" class="objective-report-grid"></div>
         </article>
@@ -432,7 +437,7 @@
           <article class="inner-card">
             <div class="section-minihead">
               <h3>Analyse detaillee</h3>
-              <p>Projets et catégories sur la plage active.</p>
+              <p>Projets et categories sur la plage active.</p>
             </div>
             <div class="table-stack">
               <div class="table-shell">
@@ -453,7 +458,7 @@
                   <table class="report-table compact-table">
                     <thead>
                       <tr>
-                        <th id="report-category-head">Catégorie</th>
+                        <th id="report-category-head">Categorie</th>
                         <th>Temps</th>
                         <th>%</th>
                         <th>Sessions</th>
@@ -496,7 +501,7 @@
             <article class="summary-card">
               <p>Temps total</p>
               <strong id="resource-total">0 h 00</strong>
-              <span id="resource-range">Aucune plage sélectionnée</span>
+              <span id="resource-range">Aucune plage selectionnee</span>
             </article>
             <article class="summary-card">
               <p>Projet principal</p>
@@ -504,7 +509,7 @@
               <span id="resource-top-project-time">0 h 00</span>
             </article>
           <article class="summary-card">
-            <p id="resource-top-category-label">Catégorie principale</p>
+            <p id="resource-top-category-label">Categorie principale</p>
             <strong id="resource-top-category">-</strong>
             <span id="resource-top-category-time">0 h 00</span>
           </article>
@@ -518,8 +523,8 @@
         <div class="manager-grid">
           <article class="inner-card">
             <div class="section-minihead">
-              <h3 id="resource-distribution-title">Répartition globale catégories</h3>
-              <p id="resource-distribution-copy">Lecture transversale des catégories sur la plage choisie.</p>
+              <h3 id="resource-distribution-title">Repartition globale categories</h3>
+              <p id="resource-distribution-copy">Lecture transversale des categories sur la plage choisie.</p>
             </div>
             <div id="resource-distribution-bar" class="distribution-bar"></div>
             <div id="resource-distribution-legend" class="distribution-legend"></div>
@@ -537,7 +542,7 @@
         <article id="resource-objectives-panel" class="inner-card objective-report-panel">
           <div class="section-minihead">
             <h3>Objectifs 2026</h3>
-            <p>Lecture globale des OKR et répartition des KR sur la plage active.</p>
+            <p>Lecture globale des OKR et repartition des KR sur la plage active.</p>
           </div>
           <div id="resource-objectives-grid" class="objective-report-grid"></div>
         </article>
@@ -567,7 +572,7 @@
             <article class="inner-card">
               <div class="section-minihead">
                 <h3>Allocation globale</h3>
-                <p>Top projets et catégories sur la même plage.</p>
+                <p>Top projets et categories sur la meme plage.</p>
               </div>
               <div class="table-stack">
                 <div class="table-shell">
@@ -588,7 +593,7 @@
                   <table class="report-table compact-table">
                     <thead>
                       <tr>
-                        <th id="resource-category-head">Catégorie</th>
+                        <th id="resource-category-head">Categorie</th>
                         <th>Temps</th>
                         <th>%</th>
                         <th>Sessions</th>
@@ -623,9 +628,30 @@
           <div class="panel-head">
             <div>
               <p class="eyebrow">Journal</p>
-              <h2>Entrées récentes</h2>
+              <h2>Entrees recentes</h2>
             </div>
-            <p class="panel-copy">Lecture récente et correction rapide.</p>
+            <p class="panel-copy">Lecture recente et correction rapide.</p>
+          </div>
+          <div class="journal-filters">
+            <label class="field">
+              <span>Depuis</span>
+              <input id="journal-filter-from" class="select-input" type="datetime-local" />
+            </label>
+            <label class="field">
+              <span>Jusqu'a</span>
+              <input id="journal-filter-to" class="select-input" type="datetime-local" />
+            </label>
+            <label class="field">
+              <span>Categorie</span>
+              <input id="journal-filter-category" class="select-input" type="text" list="category-suggestions" placeholder="Toutes" />
+            </label>
+            <label class="field">
+              <span>Sujet</span>
+              <input id="journal-filter-subject" class="select-input" type="text" placeholder="Filtrer un sujet" />
+            </label>
+            <div class="journal-filter-actions">
+              <button id="journal-filter-reset" type="button" class="btn btn-secondary">Reinitialiser</button>
+            </div>
           </div>
           <div id="session-list" class="session-list"></div>
         </section>
@@ -634,9 +660,9 @@
           <div class="panel-head">
             <div>
               <p class="eyebrow">Memoire projet</p>
-              <h2>Contextes mémorisés</h2>
+              <h2>Contextes memorises</h2>
             </div>
-            <p class="panel-copy">Les derniers contextes réutilisables reviennent ici.</p>
+            <p class="panel-copy">Les derniers contextes reutilisables reviennent ici.</p>
           </div>
           <div id="project-memory-list" class="memory-list"></div>
         </section>
@@ -660,7 +686,7 @@
         <div class="dialog-head">
           <div>
             <p class="eyebrow">Saisie manuelle</p>
-            <h2>Ajouter ou corriger une entrée</h2>
+            <h2>Ajouter ou corriger une entree</h2>
           </div>
           <button type="submit" class="dialog-close" aria-label="Fermer">x</button>
         </div>
@@ -670,7 +696,7 @@
 
           <label class="field">
             <span>Sujet</span>
-            <input id="manual-project-input" type="text" autocomplete="off" placeholder="Ex. Réunion Boussole, audit ADEME, synthèse compta" />
+            <input id="manual-project-input" type="text" list="project-suggestions" placeholder="Ex. Reunion Boussole, audit ADEME, synthese compta" />
           </label>
 
           <label class="field field-full">
@@ -679,7 +705,7 @@
           </label>
 
           <label class="field">
-            <span>Catégorie</span>
+            <span>Categories</span>
             <input id="manual-categories-input" type="text" placeholder="Conseil, delivery" />
           </label>
 
@@ -689,7 +715,7 @@
           </label>
 
           <label class="field">
-            <span>Lien d'intérêt</span>
+            <span>Lien d'interet</span>
             <input id="manual-notion-input" type="text" placeholder="Notion, Google Sheets ou autre lien utile" />
           </label>
 
@@ -697,7 +723,7 @@
             <details id="manual-objective-disclosure" class="objective-disclosure">
               <summary class="objective-summary">
                 <div class="objective-summary-copy">
-                  <span class="objective-summary-title">Associer à un objectif 2026 (optionnel)</span>
+                  <span class="objective-summary-title">Associer a un objectif 2026 (optionnel)</span>
                   <span id="manual-objective-summary-text" class="objective-summary-text"></span>
                 </div>
               </summary>
@@ -705,10 +731,10 @@
               <div class="objective-block">
                 <div class="objective-grid">
                   <label class="field objective-subfield">
-                    <span>Pôle</span>
+                    <span>Pole</span>
                     <div class="single-select-field">
                       <div class="single-select-token" id="manual-objective-pole-selected"></div>
-                      <input id="manual-objective-pole-input" type="text" placeholder="Pôle principal" />
+                      <input id="manual-objective-pole-input" type="text" placeholder="Pole principal" />
                     </div>
                   </label>
 
@@ -724,7 +750,7 @@
                     <span>KR</span>
                     <div class="single-select-field">
                       <div class="single-select-token" id="manual-objective-kr-selected"></div>
-                      <input id="manual-objective-kr-input" type="text" placeholder="Résultat clé si besoin" />
+                      <input id="manual-objective-kr-input" type="text" placeholder="Resultat cle si besoin" />
                     </div>
                   </label>
                 </div>
@@ -734,17 +760,47 @@
 
           <label class="field">
             <span>Debut</span>
-            <input id="manual-start-input" type="datetime-local" />
+            <input id="manual-start-input" type="text" inputmode="numeric" placeholder="17/04/2026 14:30" />
           </label>
 
           <label class="field">
             <span>Fin</span>
-            <input id="manual-end-input" type="datetime-local" />
+            <input id="manual-end-input" type="text" inputmode="numeric" placeholder="17/04/2026 16:00" />
           </label>
 
           <label class="field field-full">
+            <span>Duree (h)</span>
+            <input
+              id="manual-duration-input"
+              type="text"
+              inputmode="decimal"
+              list="manual-duration-suggestions"
+              placeholder="Ex. 1,5"
+            />
+            <small class="hint">Pas rapides de 0,5 h. Si besoin, debut et fin acceptent aussi une saisie minute precise.</small>
+          </label>
+          <datalist id="manual-duration-suggestions">
+            <option value="0,5"></option>
+            <option value="1"></option>
+            <option value="1,5"></option>
+            <option value="2"></option>
+            <option value="2,5"></option>
+            <option value="3"></option>
+            <option value="3,5"></option>
+            <option value="4"></option>
+            <option value="4,5"></option>
+            <option value="5"></option>
+            <option value="5,5"></option>
+            <option value="6"></option>
+            <option value="6,5"></option>
+            <option value="7"></option>
+            <option value="7,5"></option>
+            <option value="8"></option>
+          </datalist>
+
+          <label class="field field-full">
             <span>Note</span>
-            <input id="manual-notes-input" type="text" placeholder="Précision ou correction" />
+            <input id="manual-notes-input" type="text" placeholder="Precision ou correction" />
           </label>
         </div>
 
@@ -784,14 +840,14 @@
         <div class="dialog-head">
           <div>
             <p class="eyebrow">Session active</p>
-            <h2>Corriger l'heure de début</h2>
+            <h2>Corriger l'heure de debut</h2>
           </div>
           <button type="submit" class="dialog-close" aria-label="Fermer">x</button>
         </div>
 
         <label class="field">
           <span>Debut</span>
-          <input id="active-start-dialog-input" type="datetime-local" />
+          <input id="active-start-dialog-input" type="text" inputmode="numeric" placeholder="17/04/2026 14:30" />
         </label>
 
         <div class="dialog-actions">
@@ -806,7 +862,7 @@
         <div class="dialog-head">
           <div>
             <p class="eyebrow">Champ</p>
-            <h2 id="field-manage-title">Gérer la valeur</h2>
+            <h2 id="field-manage-title">Gerer la valeur</h2>
           </div>
           <button type="submit" class="dialog-close" aria-label="Fermer">x</button>
         </div>
@@ -841,21 +897,28 @@
           <p class="session-task"></p>
           <p class="session-secondary"></p>
           <div class="session-meta-row">
-            <span class="session-categories"></span>
-            <span class="session-tags"></span>
+            <div class="session-categories"></div>
+            <div class="session-tags"></div>
           </div>
           <p class="session-notes"></p>
         </div>
         <div class="session-side">
           <p class="session-duration"></p>
           <p class="session-date"></p>
-          <button type="button" class="btn btn-secondary session-edit-button">Corriger</button>
-          <button
-            type="button"
-            class="session-delete-button"
-            aria-label="Supprimer l'entrée"
-            title="Supprimer l'entrée"
-          >🗑</button>
+          <div class="session-actions">
+            <button
+              type="button"
+              class="session-edit-button"
+              aria-label="Modifier l'entree"
+              title="Modifier l'entree"
+            >🛠</button>
+            <button
+              type="button"
+              class="session-delete-button"
+              aria-label="Supprimer l'entree"
+              title="Supprimer l'entree"
+            >🗑</button>
+          </div>
         </div>
       </article>
     </template>
