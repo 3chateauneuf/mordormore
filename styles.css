@@ -331,6 +331,7 @@ button {
 .section-minihead,
 .time-form,
 .session-list,
+.journal-filters,
 .memory-list,
 .table-stack,
 .cadre-stack {
@@ -373,7 +374,7 @@ button {
 }
 
 .capture-layout {
-  grid-template-columns: minmax(300px, 1.15fr) minmax(0, 0.85fr);
+  grid-template-columns: minmax(280px, 0.9fr) minmax(0, 1.45fr);
   align-items: start;
 }
 
@@ -382,30 +383,6 @@ button {
   max-width: none;
   min-width: 0;
   justify-self: stretch;
-  padding: 14px 16px;
-  border-radius: var(--radius-card);
-  border: 1px dashed rgba(24, 56, 74, 0.1);
-  background: rgba(24, 56, 74, 0.02);
-}
-
-.capture-form-panel .field input,
-.capture-form-panel .token-field {
-  min-height: 40px;
-  padding: 9px 12px;
-  font-size: 0.92rem;
-}
-
-.capture-form-panel .field span {
-  font-size: 0.74rem;
-}
-
-.capture-form-panel .section-minihead h3 {
-  font-size: 0.92rem;
-  color: var(--muted);
-}
-
-.capture-form-panel .section-minihead p {
-  font-size: 0.78rem;
 }
 
 .form-grid {
@@ -418,6 +395,16 @@ button {
 
 .manager-kpis {
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+}
+
+.journal-filters {
+  grid-template-columns: repeat(4, minmax(0, 1fr)) auto;
+  align-items: end;
+}
+
+.journal-filter-actions {
+  display: flex;
+  justify-content: flex-end;
 }
 
 .field {
@@ -799,14 +786,6 @@ button {
   letter-spacing: -0.08em;
 }
 
-.timer-today-total {
-  margin: -4px 0 0;
-  font-size: 0.82rem;
-  font-weight: 700;
-  color: var(--muted);
-  letter-spacing: 0.01em;
-}
-
 .compact-field {
   width: 100%;
 }
@@ -838,24 +817,6 @@ button {
 
 .start-display-button:disabled {
   cursor: default;
-}
-
-.last-activity-chip {
-  display: inline;
-  padding: 2px 8px;
-  border-radius: 6px;
-  border: 1px solid rgba(15, 118, 110, 0.18);
-  background: rgba(15, 118, 110, 0.08);
-  color: var(--accent);
-  font-size: 0.84rem;
-  font-weight: 700;
-  cursor: pointer;
-  transition: background 160ms ease, border-color 160ms ease;
-}
-
-.last-activity-chip:hover {
-  background: rgba(15, 118, 110, 0.14);
-  border-color: rgba(15, 118, 110, 0.28);
 }
 
 .start-inline input[hidden] {
@@ -958,38 +919,6 @@ button {
   font-size: clamp(1.6rem, 2vw, 2.3rem);
   letter-spacing: -0.05em;
   line-height: 0.96;
-}
-
-.cadre-reading {
-  padding: 16px 18px;
-  background: var(--panel-soft);
-  border-style: solid;
-  border-color: rgba(24, 56, 74, 0.06);
-  box-shadow: none;
-}
-
-.cadre-reading-head {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 12px;
-  flex-wrap: wrap;
-}
-
-.summary-card-compact {
-  padding: 12px;
-}
-
-.summary-card-compact p {
-  font-size: 0.72rem;
-}
-
-.summary-card-compact strong {
-  font-size: clamp(1.2rem, 1.6vw, 1.6rem);
-}
-
-.summary-card-compact span {
-  font-size: 0.76rem;
 }
 
 .section-minihead {
@@ -1195,12 +1124,6 @@ button {
   align-content: center;
 }
 
-.agenda-event--minimal {
-  gap: 0;
-  padding: 2px 5px;
-  align-content: center;
-}
-
 .agenda-event--tiny {
   padding: 0;
   border-radius: 4px;
@@ -1236,14 +1159,6 @@ button {
   line-height: 1.15;
 }
 
-.agenda-event-time--minimal {
-  font-size: 0.58rem;
-  line-height: 1.1;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
 .agenda-event-client {
   color: var(--text);
   font-size: 0.8rem;
@@ -1252,26 +1167,6 @@ button {
   max-width: calc(100% - 16px);
   overflow: hidden;
   text-overflow: ellipsis;
-}
-
-.agenda-event-client--compact {
-  font-size: 0.64rem;
-  font-weight: 700;
-  line-height: 1.15;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 100%;
-}
-
-.agenda-event-detail {
-  color: var(--muted);
-  font-size: 0.68rem;
-  font-weight: 600;
-  line-height: 1.2;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
 }
 
 .agenda-event-icon {
@@ -1538,35 +1433,54 @@ button {
 
 .session-item,
 .memory-card {
-  padding: 15px;
+  padding: 12px 14px;
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
-  gap: 14px;
-  align-items: center;
+  gap: 10px;
+  align-items: start;
 }
 
 .session-copy,
 .memory-copy {
   display: grid;
-  gap: 8px;
+  gap: 6px;
   min-width: 0;
 }
 
 .session-meta-row {
   display: grid;
-  gap: 6px;
+  gap: 5px;
 }
 
 .session-categories {
-  font-size: 0.88rem;
-  line-height: 1.45;
-  color: var(--muted);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.session-categories .pill {
+  padding: 5px 9px;
+  background: rgba(15, 118, 110, 0.1);
+  border-color: rgba(15, 118, 110, 0.16);
+  color: var(--accent-strong);
+  font-size: 0.75rem;
+  font-weight: 800;
 }
 
 .session-tags {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 6px;
+  opacity: 0.72;
+}
+
+.session-tags .pill {
+  padding: 4px 8px;
+  background: rgba(24, 56, 74, 0.03);
+  border-color: rgba(24, 56, 74, 0.06);
+  color: var(--muted);
+  font-size: 0.72rem;
+  font-weight: 700;
 }
 
 .session-task,
@@ -1574,21 +1488,44 @@ button {
   font-weight: 800;
 }
 
+.session-task {
+  font-size: 0.98rem;
+  line-height: 1.25;
+}
+
+.session-secondary,
+.session-date {
+  display: none;
+}
+
+.session-notes {
+  font-size: 0.82rem;
+  line-height: 1.35;
+}
+
 .session-side {
   display: grid;
-  gap: 8px;
+  gap: 6px;
   justify-items: end;
   text-align: right;
 }
 
-.session-side .btn {
-  min-height: 38px;
-  padding: 8px 12px;
+.session-duration {
+  font-size: 0.96rem;
+  font-weight: 800;
+  white-space: nowrap;
 }
 
+.session-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.session-edit-button,
 .session-delete-button {
-  width: 30px;
-  height: 30px;
+  width: 28px;
+  height: 28px;
   display: inline-grid;
   place-items: center;
   padding: 0;
@@ -1596,9 +1533,16 @@ button {
   border-radius: 8px;
   background: transparent;
   color: var(--muted);
-  font-size: 0.9rem;
+  font-size: 0.88rem;
   line-height: 1;
   transition: transform 160ms ease, border-color 160ms ease, background 160ms ease, color 160ms ease;
+}
+
+.session-edit-button:hover {
+  transform: translateY(-1px);
+  border-color: rgba(24, 56, 74, 0.22);
+  background: rgba(24, 56, 74, 0.06);
+  color: var(--text);
 }
 
 .session-delete-button:hover {
@@ -1728,6 +1672,7 @@ button {
   .manager-grid,
   .manager-analysis-grid,
   .journal-grid,
+  .journal-filters,
   .capture-layout,
   .manager-kpis,
   .cadre-summary,
