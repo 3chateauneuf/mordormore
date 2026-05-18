@@ -9362,6 +9362,12 @@ async function syncGoogleCalendar(collaborator) {
     }
   }
 
+  // Purge snapshots from URLs that are no longer configured for this collaborator
+  storedRows = storedRows.filter(
+    (s) => !(normalizeText(s.collaborator) === normalizeText(collaborator) &&
+             !icsUrls.includes(s.source_calendar_id)),
+  );
+
   storePlannedCalendarSnapshots(storedRows);
   plannedCalendarSnapshots = loadStoredPlannedCalendarSnapshots();
 
@@ -9483,11 +9489,13 @@ function buildPlannedImportedEvent(snapshot, event, index) {
 function getImportedPlannedEventsForCollaborator(collaborator, range) {
   const normalizedCollaborator = normalizeText(collaborator);
   const targetWeekStart = formatDateInput(range.start);
+  const configuredUrls = getCalendarIcsUrls(collaborator);
   return plannedCalendarSnapshots
     .filter(
       (snapshot) =>
         normalizeText(snapshot.collaborator) === normalizedCollaborator &&
-        String(snapshot.week_start ?? "") === targetWeekStart,
+        String(snapshot.week_start ?? "") === targetWeekStart &&
+        (configuredUrls.length === 0 || configuredUrls.includes(snapshot.source_calendar_id)),
     )
     .flatMap((snapshot) =>
       (snapshot.events ?? [])
