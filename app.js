@@ -6840,6 +6840,22 @@ function renderDayThemes() {
     label.className = "chip-theme-label";
     label.textContent = item.label;
 
+    const send = document.createElement("button");
+    send.type = "button";
+    send.className = "chip-theme-send";
+    send.setAttribute("aria-label", `Utiliser comme sujet : ${item.label}`);
+    send.title = "Mettre comme sujet";
+    send.innerHTML = `<svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="11" height="11" aria-hidden="true"><path d="M2 6h8M6.5 2.5L10 6l-3.5 3.5"/></svg>`;
+
+    send.addEventListener("click", (e) => {
+      e.stopPropagation();
+      if (projectInput) {
+        projectInput.value = item.label;
+        projectInput.dispatchEvent(new Event("input", { bubbles: true }));
+        projectInput.focus();
+      }
+    });
+
     const remove = document.createElement("button");
     remove.type = "button";
     remove.className = "chip-theme-remove";
@@ -6847,7 +6863,7 @@ function renderDayThemes() {
     remove.setAttribute("aria-label", `Retirer ${item.label}`);
     remove.textContent = "×";
 
-    chip.append(label, remove);
+    chip.append(label, send, remove);
 
     // ── Drag & drop ──
     chip.addEventListener("dragstart", (e) => {
