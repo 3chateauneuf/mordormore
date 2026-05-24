@@ -9068,15 +9068,13 @@ function buildPlannedCategoryRows(rows) {
 }
 
 function getPlannedEventsForCollaborator(collaborator, range) {
+  if (!getCalendarIcsUrl(collaborator)) {
+    return [];
+  }
+
   const importedRows = getImportedPlannedEventsForCollaborator(collaborator, range);
   if (importedRows.length) {
     return importedRows;
-  }
-
-  // If the user has a real calendar configured, never show mock suggestions —
-  // only real imports should appear (or nothing if not yet synced for this week).
-  if (getCalendarIcsUrl(collaborator)) {
-    return [];
   }
 
   const currentWeekStart = getStartOfWeek(new Date());
