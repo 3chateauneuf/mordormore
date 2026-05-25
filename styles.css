@@ -2336,6 +2336,32 @@ select.select-input {
   z-index: 10;
 }
 
+/* ── Alt / Option clone mode ─────────────────────────────── */
+body.alt-clone-mode .agenda-event[data-session-id] {
+  cursor: copy !important;
+}
+
+body.alt-clone-mode .agenda-event[data-session-id]:hover {
+  outline: 2px dashed color-mix(in srgb, var(--agenda-accent) 65%, transparent);
+  outline-offset: 2px;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 0 0 5px color-mix(in srgb, var(--agenda-accent) 10%, transparent),
+              0 6px 20px rgba(24, 56, 74, 0.16);
+  background: color-mix(in srgb, var(--agenda-accent) 20%, white);
+}
+
+@keyframes agenda-clone-flash {
+  0%   { transform: scale(1)    translateY(0);    filter: brightness(1);    }
+  35%  { transform: scale(1.07) translateY(-3px); filter: brightness(1.18); }
+  100% { transform: scale(1)    translateY(0);    filter: brightness(1);    }
+}
+
+.agenda-event--cloning {
+  animation: agenda-clone-flash 280ms cubic-bezier(.22, .68, 0, 1.2) forwards;
+  pointer-events: none;
+  z-index: 10;
+}
+
 .agenda-event p,
 .agenda-event span {
   margin: 0;

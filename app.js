@@ -708,6 +708,7 @@ let quickProjectsDragState = null;
 let agendaDragState = null;
 let agendaLastScrolledWeekStart = null;
 let suppressNextAgendaClick = false;
+let _altCloneModeActive = false;
 let auditTableAvailable = null;
 let remoteActiveSessions = [];
 let repriseActions = loadStoredRepriseActions();
@@ -1043,6 +1044,24 @@ document.addEventListener("keydown", (event) => {
     event.preventDefault();
     stopActiveSession();
   }
+});
+
+// Alt/Option clone mode — track key state and toggle body class for CSS
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Alt" && !_altCloneModeActive) {
+    _altCloneModeActive = true;
+    document.body.classList.add("alt-clone-mode");
+  }
+});
+document.addEventListener("keyup", (e) => {
+  if (e.key === "Alt") {
+    _altCloneModeActive = false;
+    document.body.classList.remove("alt-clone-mode");
+  }
+});
+window.addEventListener("blur", () => {
+  _altCloneModeActive = false;
+  document.body.classList.remove("alt-clone-mode");
 });
 
 openManualButton.addEventListener("click", () => {
@@ -1645,6 +1664,8 @@ agendaBoard.addEventListener("click", (event) => {
     const session = findSessionById(target.dataset.sessionId);
     if (session) {
       if (event.altKey) {
+        target.classList.add("agenda-event--cloning");
+        target.addEventListener("animationend", () => target.classList.remove("agenda-event--cloning"), { once: true });
         openManualDialog(null, { ...session });
       } else {
         openManualDialog(session);
