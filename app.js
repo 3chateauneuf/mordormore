@@ -2375,6 +2375,11 @@ function beginAgendaDrag(event) {
     return;
   }
 
+  // Alt/Option held → clone mode, do not drag
+  if (event.altKey) {
+    return;
+  }
+
   const eventElement = event.target.closest(".agenda-event");
   if (!eventElement) {
     return;
