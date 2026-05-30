@@ -8610,7 +8610,10 @@ function layoutAgendaTimedRows(dayRows, startHour, endHour, hourHeight, getStart
     const endParsed = endRaw ? new Date(endRaw) : null;
     const end = (endParsed && !isNaN(endParsed.getTime())) ? endParsed : new Date();
     const visibleStartMinutes = Math.max(0, (start.getHours() - startHour) * 60 + start.getMinutes());
-    const visibleEndMinutes = Math.min((endHour - startHour) * 60, (end.getHours() - startHour) * 60 + end.getMinutes());
+    const rawEndMinutes = (end.getHours() - startHour) * 60 + end.getMinutes();
+    // If end is past midnight (local hours before startHour), cap to end of the visible day.
+    const clampedEndMinutes = rawEndMinutes < 0 ? (endHour - startHour) * 60 : rawEndMinutes;
+    const visibleEndMinutes = Math.min((endHour - startHour) * 60, clampedEndMinutes);
     return {
       session,
       startMinutes: visibleStartMinutes,
@@ -9111,6 +9114,11 @@ function getPlannedEventsForCollaborator(collaborator, range) {
   if (range.end <= currentWeekStart) {
     return [];
   }
+
+  // URL is configured but no imported events — calendar may be empty, sync may
+  // have failed, or all events were already integrated. Never show mock events
+  // when the user has an iCal URL: fake events are more confusing than nothing.
+  return [];
 
   const weekOffset = Math.max(
     0,
