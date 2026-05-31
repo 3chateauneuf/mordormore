@@ -13,9 +13,6 @@ const $ = (id) => document.getElementById(id);
 
 const screenAuth   = $("screen-auth");
 const screenMain   = $("screen-main");
-const formLogin    = $("form-login");
-const authError    = $("auth-error");
-const btnLogout    = $("btn-logout");
 
 const cardSession  = $("card-session");
 const cardNone     = $("card-no-session");
@@ -95,6 +92,9 @@ async function init() {
 function showAuth() {
   screenMain.classList.add("hidden");
   screenAuth.classList.remove("hidden");
+  // Reset to step 1
+  $("form-login").classList.remove("hidden");
+  $("auth-sent").classList.add("hidden");
   stopPolling();
 }
 
@@ -105,24 +105,41 @@ function showMain() {
   startPolling();
 }
 
-formLogin.addEventListener("submit", async (e) => {
+async function sendMagicLink(email) {
+  const { error } = await db.auth.signInWithOtp({
+    email,
+    options: { shouldCreateUser: true },
+  });
+  return error;
+}
+
+$("form-login").addEventListener("submit", async (e) => {
   e.preventDefault();
-  hideError(authError);
+  hideError($("auth-error"));
   const btn = $("btn-login");
   btn.disabled = true;
   btn.textContent = "…";
 
-  const email    = $("input-email").value.trim();
-  const password = $("input-password").value;
+  const email = $("input-email").value.trim();
+  const error = await sendMagicLink(email);
 
-  const { error } = await db.auth.signInWithPassword({ email, password });
   btn.disabled = false;
-  btn.textContent = "Connexion";
+  btn.textContent = "Envoyer un lien";
 
-  if (error) showError(authError, error.message);
+  if (error) {
+    showError($("auth-error"), error.message);
+  } else {
+    $("form-login").classList.add("hidden");
+    $("auth-sent").classList.remove("hidden");
+  }
 });
 
-btnLogout.addEventListener("click", async () => {
+$("btn-resend").addEventListener("click", async () => {
+  $("auth-sent").classList.add("hidden");
+  $("form-login").classList.remove("hidden");
+});
+
+$("btn-logout").addEventListener("click", async () => {
   await db.auth.signOut();
 });
 

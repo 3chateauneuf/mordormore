@@ -66,8 +66,22 @@ html, body {
   text-transform: uppercase;
 }
 
-#form-login {
+#form-login, .auth-sent {
   display: flex; flex-direction: column; gap: 12px;
+}
+
+.auth-sent.hidden { display: none; }
+
+.sent-icon {
+  font-size: 36px; text-align: center;
+}
+
+.sent-title {
+  font-size: 18px; font-weight: 700; text-align: center;
+}
+
+.sent-body {
+  font-size: 14px; color: var(--muted); text-align: center; line-height: 1.5;
 }
 
 input[type="email"], input[type="password"] {
